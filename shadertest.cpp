@@ -25,36 +25,36 @@ int main()
     GLFWwindow* helloOGL = glfwCreateWindow(1920, 1080, "Hello, OpenGL", NULL, NULL);
     glfwMakeContextCurrent(helloOGL);
 
-	GLenum err = glewInit();
-	if( GLEW_OK != err )
-	{
-	    std::cerr
-		<< "Error initializing GLEW: "
-		<< glewGetErrorString(err)
-		<< std::endl;
-	}
+    GLenum err = glewInit();
+    if( GLEW_OK != err )
+    {
+        std::cerr
+        << "Error initializing GLEW: "
+        << glewGetErrorString(err)
+        << std::endl;
+    }
 
-	// Get OpenGL properties
-	GLint major, minor;
-	glGetIntegerv(GL_MAJOR_VERSION, &major);
-	glGetIntegerv(GL_MINOR_VERSION, &minor);
+    // Get OpenGL properties
+    GLint major, minor;
+    glGetIntegerv(GL_MAJOR_VERSION, &major);
+    glGetIntegerv(GL_MINOR_VERSION, &minor);
 
-	std::string renderer(get_string(GL_RENDERER));
-	std::string vendor(get_string(GL_VENDOR));
-	std::string version(get_string(GL_VERSION));
-	std::string glsl(get_string(GL_SHADING_LANGUAGE_VERSION));
+    std::string renderer(get_string(GL_RENDERER));
+    std::string vendor(get_string(GL_VENDOR));
+    std::string version(get_string(GL_VERSION));
+    std::string glsl(get_string(GL_SHADING_LANGUAGE_VERSION));
 
-	// Print OpenGL properties
-	std::cout
-	<< "OpenGL version "
-	<< version
-	<< "(" << major << "." << minor << ")" << std::endl
-	<< "Vendor:        " << vendor << std::endl
-	<< "Renderer:      " << renderer << std::endl
-	<< "GLSL:          " << glsl << std::endl;
+    // Print OpenGL properties
+    std::cout
+    << "OpenGL version "
+    << version
+    << "(" << major << "." << minor << ")" << std::endl
+    << "Vendor:        " << vendor << std::endl
+    << "Renderer:      " << renderer << std::endl
+    << "GLSL:          " << glsl << std::endl;
 
-	//   Buh-bye
-	glfwDestroyWindow(helloOGL);
-	glfwTerminate();
-	return EXIT_SUCCESS;
+    //   Buh-bye
+    glfwDestroyWindow(helloOGL);
+    glfwTerminate();
+    return EXIT_SUCCESS;
 }
