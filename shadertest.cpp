@@ -5,14 +5,26 @@
  *      Author: nevangelista
  */
 #include <GL/glew.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
 #include <iostream>
+#include <string>
+
+inline const char* get_string( unsigned int oglString )
+{
+    return reinterpret_cast<const char*>( glGetString( oglString ) );
+}
 
 int main()
 {
+    // Init GFLW
+    glfwInit();
+
+    // Window and context
+    GLFWwindow* helloOGL = glfwCreateWindow(1920, 1080, "Hello, OpenGL", NULL, NULL);
+    glfwMakeContextCurrent(helloOGL);
+
 	GLenum err = glewInit();
 	if( GLEW_OK != err )
 	{
@@ -22,9 +34,27 @@ int main()
 		<< std::endl;
 	}
 
-	return 0;
+	// Get OpenGL properties
+	GLint major, minor;
+	glGetIntegerv(GL_MAJOR_VERSION, &major);
+	glGetIntegerv(GL_MINOR_VERSION, &minor);
+
+	std::string renderer(get_string(GL_RENDERER));
+	std::string vendor(get_string(GL_VENDOR));
+	std::string version(get_string(GL_VERSION));
+	std::string glsl(get_string(GL_SHADING_LANGUAGE_VERSION));
+
+	// Print OpenGL properties
+	std::cout
+	<< "OpenGL version "
+	<< version
+	<< "(" << major << "." << minor << ")" << std::endl
+	<< "Vendor:        " << vendor << std::endl
+	<< "Renderer:      " << renderer << std::endl
+	<< "GLSL:          " << glsl << std::endl;
+
+	//   Buh-bye
+	glfwDestroyWindow(helloOGL);
+	glfwTerminate();
+	return EXIT_SUCCESS;
 }
-
-
-
-
