@@ -37,19 +37,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: shaderapp
+all: shader-chef-debian
 
 # Tool invocations
-shaderapp: $(OBJS) $(USER_OBJS)
+shader-chef-debian: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L/usr/lib64 -o "shaderapp" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/usr/lib64 -o "shader-chef-debian" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) shaderapp
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) shader-chef-debian
 	-@echo ' '
 
 .PHONY: all clean dependents
