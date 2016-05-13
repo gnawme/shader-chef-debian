@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 inline const char* get_string( unsigned int oglString )
 {
@@ -52,6 +53,30 @@ int main()
     << "Vendor:        " << vendor << std::endl
     << "Renderer:      " << renderer << std::endl
     << "GLSL:          " << glsl << std::endl;
+
+    // Acquire OpenGL extensions
+    GLint num_extensions;
+    glGetIntegerv( GL_NUM_EXTENSIONS, &num_extensions );
+
+    std::vector<std::string> extensions;
+    for ( int i = 0; i < num_extensions; ++i )
+    {
+        extensions.push_back(
+            reinterpret_cast<const char*>( glGetStringi( GL_EXTENSIONS, i ) ) );
+    }
+
+    // Print them out
+    std::cout
+    << extensions.size()
+    << " OpenGL extensions: " << std::endl;
+    for ( auto it : extensions )
+    {
+        std::cout
+        << "\t"
+        << it
+        << std::endl;
+    }
+
 
     //   Buh-bye
     glfwDestroyWindow(helloOGL);
