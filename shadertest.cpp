@@ -1,3 +1,7 @@
+/*---------------------------------------------------------------------------*\
+| \author   Norm Evangelista
+| \brief    Retrieves OpenGL extensions list
+\*---------------------------------------------------------------------------*/
 /*
  * shadertest.cpp
  *
@@ -12,11 +16,18 @@
 #include <string>
 #include <vector>
 
+/*---------------------------------------------------------------------------*\
+| \fn       get_string
+| \brief    Recasts const GLubyte* to const char*
+\*---------------------------------------------------------------------------*/
 inline const char* get_string(unsigned int oglString)
 {
     return reinterpret_cast<const char*>(glGetString(oglString));
 }
 
+/*---------------------------------------------------------------------------*\
+| \fn       main
+\*---------------------------------------------------------------------------*/
 int main()
 {
     // Init GFLW
@@ -29,9 +40,9 @@ int main()
     GLenum err = glewInit();
     if (GLEW_OK != err) {
         std::cerr
-                << "Error initializing GLEW: "
-                << glewGetErrorString(err)
-                << std::endl;
+        << "Error initializing GLEW: "
+        << glewGetErrorString(err)
+        << std::endl;
     }
 
     // Get OpenGL properties
@@ -58,23 +69,23 @@ int main()
     glGetIntegerv(GL_NUM_EXTENSIONS, &num_extensions);
 
     std::vector<std::string> extensions;
-    for(int i = 0; i < num_extensions; ++i) {
+    for (int i = 0; i < num_extensions; ++i) {
         extensions.push_back(
             reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i)));
     }
 
     // Print them out
     std::cout
+    << std::endl
     << extensions.size()
     << " OpenGL extensions: " << std::endl;
-    for(auto it : extensions) {
+    for (auto it : extensions) {
         std::cout
-                << "\t"
-                << it
-                << std::endl;
+        << "\t"
+        << it
+        << std::endl;
     }
-
-
+    
     //   Buh-bye
     glfwDestroyWindow(helloOGL);
     glfwTerminate();
