@@ -12,9 +12,9 @@
 #include <string>
 #include <vector>
 
-inline const char* get_string( unsigned int oglString )
+inline const char* get_string(unsigned int oglString)
 {
-    return reinterpret_cast<const char*>( glGetString( oglString ) );
+    return reinterpret_cast<const char*>(glGetString(oglString));
 }
 
 int main()
@@ -27,12 +27,11 @@ int main()
     glfwMakeContextCurrent(helloOGL);
 
     GLenum err = glewInit();
-    if( GLEW_OK != err )
-    {
+    if (GLEW_OK != err) {
         std::cerr
-        << "Error initializing GLEW: "
-        << glewGetErrorString(err)
-        << std::endl;
+                << "Error initializing GLEW: "
+                << glewGetErrorString(err)
+                << std::endl;
     }
 
     // Get OpenGL properties
@@ -56,25 +55,23 @@ int main()
 
     // Acquire OpenGL extensions
     GLint num_extensions;
-    glGetIntegerv( GL_NUM_EXTENSIONS, &num_extensions );
+    glGetIntegerv(GL_NUM_EXTENSIONS, &num_extensions);
 
     std::vector<std::string> extensions;
-    for ( int i = 0; i < num_extensions; ++i )
-    {
+    for(int i = 0; i < num_extensions; ++i) {
         extensions.push_back(
-            reinterpret_cast<const char*>( glGetStringi( GL_EXTENSIONS, i ) ) );
+            reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i)));
     }
 
     // Print them out
     std::cout
     << extensions.size()
     << " OpenGL extensions: " << std::endl;
-    for ( auto it : extensions )
-    {
+    for(auto it : extensions) {
         std::cout
-        << "\t"
-        << it
-        << std::endl;
+                << "\t"
+                << it
+                << std::endl;
     }
 
 

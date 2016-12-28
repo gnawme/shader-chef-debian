@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
-project(shader_chef_debian)
+project(shader_chef_linux)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lGL -lGLEW -lglfw")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(CMAKE_INCLUDE_PATH
     /usr/include/GLFW
@@ -12,4 +12,5 @@ set(SOURCE_FILES
 
 set(CMAKE_LIBRARY_PATH /usr/lib/x86_64-linux-gnu)
 
-add_executable(shader_chef_debian ${SOURCE_FILES})
+add_executable(shadertest ${SOURCE_FILES})
+target_link_libraries(shadertest  -lGL -lGLEW -lglfw)
