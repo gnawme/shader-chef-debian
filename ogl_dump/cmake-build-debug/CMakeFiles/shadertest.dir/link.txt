@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11 -g   CMakeFiles/shadertest.dir/shadertest.cpp.o  -o shadertest -lGL -lGLEW -lglfw 

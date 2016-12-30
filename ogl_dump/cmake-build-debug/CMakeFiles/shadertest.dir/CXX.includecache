@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/norme/Projects/shader-chef-linux/ogl_dump/shadertest.cpp
+GL/glew.h
+-
+GLFW/glfw3.h
+-
+glm/glm.hpp
+-
+iostream
+-
+string
+-
+vector
+-
+
