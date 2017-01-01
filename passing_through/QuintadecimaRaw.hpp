@@ -9,12 +9,6 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-//Point A Vector[1.0, 0.0]
-//Point B Vector[0.75, 0.4296875]
-//Point C Vector[-0.171875, 0.6796875]
-//Point D Vector[-0.4296875, 0.25]
-//Point E Vector[0.0, 0.0]
-
 //! \class QuintadecimaRaw
 class QuintadecimaRaw
 {
@@ -33,25 +27,25 @@ public:
     float*      color_buffer()
     {
         if (m_cbo.empty()) {
-            m_cbo.push_back(m_hue_r.r);
-            m_cbo.push_back(m_hue_r.g);
-            m_cbo.push_back(m_hue_r.b);
+            m_cbo.emplace_back(m_hue_r.r);
+            m_cbo.emplace_back(m_hue_r.g);
+            m_cbo.emplace_back(m_hue_r.b);
 
-            m_cbo.push_back(m_hue_o.r);
-            m_cbo.push_back(m_hue_o.g);
-            m_cbo.push_back(m_hue_o.b);
+            m_cbo.emplace_back(m_hue_o.r);
+            m_cbo.emplace_back(m_hue_o.g);
+            m_cbo.emplace_back(m_hue_o.b);
 
-            m_cbo.push_back(m_hue_y.r);
-            m_cbo.push_back(m_hue_y.g);
-            m_cbo.push_back(m_hue_y.b);
+            m_cbo.emplace_back(m_hue_y.r);
+            m_cbo.emplace_back(m_hue_y.g);
+            m_cbo.emplace_back(m_hue_y.b);
 
-            m_cbo.push_back(m_hue_g.r);
-            m_cbo.push_back(m_hue_g.g);
-            m_cbo.push_back(m_hue_g.b);
+            m_cbo.emplace_back(m_hue_g.r);
+            m_cbo.emplace_back(m_hue_g.g);
+            m_cbo.emplace_back(m_hue_g.b);
 
-            m_cbo.push_back(m_hue_b.r);
-            m_cbo.push_back(m_hue_b.g);
-            m_cbo.push_back(m_hue_b.b);
+            m_cbo.emplace_back(m_hue_b.r);
+            m_cbo.emplace_back(m_hue_b.g);
+            m_cbo.emplace_back(m_hue_b.b);
         }
 
         return &m_cbo[0];
@@ -73,25 +67,25 @@ public:
     {
         // Allocate for 5 vec3<float>
         if (m_vbo.empty()) {
-            m_vbo.push_back(m_pt_d.x);
-            m_vbo.push_back(m_pt_d.y);
-            m_vbo.push_back(m_pt_d.z);
+            m_vbo.emplace_back(m_pt_d.x);
+            m_vbo.emplace_back(m_pt_d.y);
+            m_vbo.emplace_back(m_pt_d.z);
 
-            m_vbo.push_back(m_pt_c.x);
-            m_vbo.push_back(m_pt_c.y);
-            m_vbo.push_back(m_pt_c.z);
+            m_vbo.emplace_back(m_pt_c.x);
+            m_vbo.emplace_back(m_pt_c.y);
+            m_vbo.emplace_back(m_pt_c.z);
 
-            m_vbo.push_back(m_pt_e.x);
-            m_vbo.push_back(m_pt_e.y);
-            m_vbo.push_back(m_pt_e.z);
+            m_vbo.emplace_back(m_pt_e.x);
+            m_vbo.emplace_back(m_pt_e.y);
+            m_vbo.emplace_back(m_pt_e.z);
 
-            m_vbo.push_back(m_pt_b.x);
-            m_vbo.push_back(m_pt_b.y);
-            m_vbo.push_back(m_pt_b.z);
+            m_vbo.emplace_back(m_pt_b.x);
+            m_vbo.emplace_back(m_pt_b.y);
+            m_vbo.emplace_back(m_pt_b.z);
 
-            m_vbo.push_back(m_pt_a.x);
-            m_vbo.push_back(m_pt_a.y);
-            m_vbo.push_back(m_pt_a.z);
+            m_vbo.emplace_back(m_pt_a.x);
+            m_vbo.emplace_back(m_pt_a.y);
+            m_vbo.emplace_back(m_pt_a.z);
         }
 
         return &m_vbo[0];

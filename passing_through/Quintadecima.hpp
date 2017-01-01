@@ -8,14 +8,12 @@
 #include <cmath>
 #include <vector>
 
-#include <glm/glm.hpp>
-
-float torad(float deg)
+namespace
 {
-    return deg * 3.14159265358979323846f / 180.0f;
+    float torad(float deg) {
+        return deg * 3.14159265358979323846f / 180.0f;
+    }
 }
-const int NUM_PENT_VERTS = 5;
-const int PENT_VERT_DIM  = 3;
 
 class Quintadecima
 {
@@ -44,25 +42,25 @@ public:
     {
         // Allocate for 5 vec3<float>
         if (m_vbo.empty()) {
-            m_vbo.push_back(m_pt_d.x);
-            m_vbo.push_back(m_pt_d.y);
-            m_vbo.push_back(m_pt_d.z);
+            m_vbo.emplace_back(m_pt_d.x);
+            m_vbo.emplace_back(m_pt_d.y);
+            m_vbo.emplace_back(m_pt_d.z);
 
-            m_vbo.push_back(m_pt_c.x);
-            m_vbo.push_back(m_pt_c.y);
-            m_vbo.push_back(m_pt_c.z);
+            m_vbo.emplace_back(m_pt_c.x);
+            m_vbo.emplace_back(m_pt_c.y);
+            m_vbo.emplace_back(m_pt_c.z);
 
-            m_vbo.push_back(m_pt_e.x);
-            m_vbo.push_back(m_pt_e.y);
-            m_vbo.push_back(m_pt_e.z);
+            m_vbo.emplace_back(m_pt_e.x);
+            m_vbo.emplace_back(m_pt_e.y);
+            m_vbo.emplace_back(m_pt_e.z);
 
-            m_vbo.push_back(m_pt_b.x);
-            m_vbo.push_back(m_pt_b.y);
-            m_vbo.push_back(m_pt_b.z);
+            m_vbo.emplace_back(m_pt_b.x);
+            m_vbo.emplace_back(m_pt_b.y);
+            m_vbo.emplace_back(m_pt_b.z);
 
-            m_vbo.push_back(m_pt_a.x);
-            m_vbo.push_back(m_pt_a.y);
-            m_vbo.push_back(m_pt_a.z);
+            m_vbo.emplace_back(m_pt_a.x);
+            m_vbo.emplace_back(m_pt_a.y);
+            m_vbo.emplace_back(m_pt_a.z);
         }
 
         return &m_vbo[0];
@@ -72,25 +70,25 @@ public:
     float*      color_buffer()
     {
         if (m_cbo.empty()) {
-            m_cbo.push_back(m_hue_r.r);
-            m_cbo.push_back(m_hue_r.g);
-            m_cbo.push_back(m_hue_r.b);
+            m_cbo.emplace_back(m_hue_r.r);
+            m_cbo.emplace_back(m_hue_r.g);
+            m_cbo.emplace_back(m_hue_r.b);
 
-            m_cbo.push_back(m_hue_o.r);
-            m_cbo.push_back(m_hue_o.g);
-            m_cbo.push_back(m_hue_o.b);
+            m_cbo.emplace_back(m_hue_o.r);
+            m_cbo.emplace_back(m_hue_o.g);
+            m_cbo.emplace_back(m_hue_o.b);
 
-            m_cbo.push_back(m_hue_y.r);
-            m_cbo.push_back(m_hue_y.g);
-            m_cbo.push_back(m_hue_y.b);
+            m_cbo.emplace_back(m_hue_y.r);
+            m_cbo.emplace_back(m_hue_y.g);
+            m_cbo.emplace_back(m_hue_y.b);
 
-            m_cbo.push_back(m_hue_g.r);
-            m_cbo.push_back(m_hue_g.g);
-            m_cbo.push_back(m_hue_g.b);
+            m_cbo.emplace_back(m_hue_g.r);
+            m_cbo.emplace_back(m_hue_g.g);
+            m_cbo.emplace_back(m_hue_g.b);
 
-            m_cbo.push_back(m_hue_b.r);
-            m_cbo.push_back(m_hue_b.g);
-            m_cbo.push_back(m_hue_b.b);
+            m_cbo.emplace_back(m_hue_b.r);
+            m_cbo.emplace_back(m_hue_b.g);
+            m_cbo.emplace_back(m_hue_b.b);
         }
 
         return &m_cbo[0];
@@ -100,6 +98,8 @@ public:
     //! \brief  Returns number of vertices (5) * dimension (3)
     int         data_size() const
     {
+        const int NUM_PENT_VERTS = 5;
+        const int PENT_VERT_DIM = 3;
         return NUM_PENT_VERTS * PENT_VERT_DIM;
     }
 
@@ -180,7 +180,6 @@ private:
     glm::vec3   m_hue_y;
     glm::vec3   m_hue_g;
     glm::vec3   m_hue_b;
-
 
     std::vector<float> m_vbo;
     std::vector<float> m_cbo;
