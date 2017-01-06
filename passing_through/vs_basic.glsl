@@ -2,9 +2,9 @@
 #version 330
 
 layout (location = 0) in vec3	VertexPosition;
-layout (location = 1) in vec3	VertexColor;
+layout (location = 1) in vec4	VertexColor;
 
-out vec3    Color;
+out vec4    Color;
 
 void main()
 {

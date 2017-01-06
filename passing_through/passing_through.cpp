@@ -83,10 +83,10 @@ int main()
     /*-----------------------------------------------------------------------*\
     |   Create and populate BOs
     \*-----------------------------------------------------------------------*/
-    //Quintadecima penta(1.0);
-    QuintadecimaRaw penta;
+    Quintadecima penta(1.0);
+    //QuintadecimaRaw penta;
     float* vertex_data = penta.vertex_buffer();
-    float* color_data  = penta.color_buffer();
+    float* color_data  = penta.color_buffer_mono();
 
     GLuint vbo_handles[2];
     glGenBuffers(2, vbo_handles);
@@ -95,7 +95,7 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, pbo_handle);
     glBufferData(
         GL_ARRAY_BUFFER,
-        penta.data_size() * sizeof(float),
+        penta.vertex_data_size() * sizeof(float),
         vertex_data,
         GL_STATIC_DRAW);
 
@@ -103,7 +103,7 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, cbo_handle);
     glBufferData(
         GL_ARRAY_BUFFER,
-        penta.data_size() * sizeof(float),
+        penta.color_data_size() * sizeof(float),
         color_data,
         GL_STATIC_DRAW);
 
@@ -121,7 +121,7 @@ int main()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     glBindBuffer(GL_ARRAY_BUFFER, cbo_handle);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     shaders.link_program();
 

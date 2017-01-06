@@ -1,8 +1,8 @@
-//---------------------------------------------------------------------------*/
-//! \file     QuintadecimaRaw.hpp
-//! \brief    Generates the 15th known tiling pentagon from given points
-//! \see      http://bit.ly/1NOHRfM
-//---------------------------------------------------------------------------*/
+/*! -------------------------------------------------------------------------*\
+| \file     QuintadecimaRaw.hpp
+| \brief    Generates the 15th known tiling pentagon from given points
+| \see      http://bit.ly/1NOHRfM
+\*---------------------------------------------------------------------------*/
 #ifndef PASSING_THROUGH_QUINTADECIMARAW_H
 #define PASSING_THROUGH_QUINTADECIMARAW_H
 
@@ -30,35 +30,70 @@ public:
             m_cbo.emplace_back(m_hue_r.r);
             m_cbo.emplace_back(m_hue_r.g);
             m_cbo.emplace_back(m_hue_r.b);
+            m_cbo.emplace_back(m_hue_r.a);
 
             m_cbo.emplace_back(m_hue_o.r);
             m_cbo.emplace_back(m_hue_o.g);
             m_cbo.emplace_back(m_hue_o.b);
+            m_cbo.emplace_back(m_hue_o.a);
 
             m_cbo.emplace_back(m_hue_y.r);
             m_cbo.emplace_back(m_hue_y.g);
             m_cbo.emplace_back(m_hue_y.b);
+            m_cbo.emplace_back(m_hue_y.a);
 
             m_cbo.emplace_back(m_hue_g.r);
             m_cbo.emplace_back(m_hue_g.g);
             m_cbo.emplace_back(m_hue_g.b);
+            m_cbo.emplace_back(m_hue_g.a);
 
             m_cbo.emplace_back(m_hue_b.r);
             m_cbo.emplace_back(m_hue_b.g);
             m_cbo.emplace_back(m_hue_b.b);
+            m_cbo.emplace_back(m_hue_b.a);
         }
 
         return &m_cbo[0];
     }
 
-    //! \fn     data_size
-    //! \brief  Returns number of vertices (5) * dimension (3)
-    int         data_size() const
+    //! \fn     color_buffer_mono
+    float*      color_buffer_mono()
     {
-        const int NUM_PENT_VERTS = 5;
-        const int PENT_VERT_DIM  = 3;
+        if (m_cbo.empty()) {
+            m_cbo.emplace_back(m_hue_y.r);
+            m_cbo.emplace_back(m_hue_y.g);
+            m_cbo.emplace_back(m_hue_y.b);
+            m_cbo.emplace_back(m_hue_y.a);
 
-        return NUM_PENT_VERTS * PENT_VERT_DIM;
+            m_cbo.emplace_back(m_hue_y.r);
+            m_cbo.emplace_back(m_hue_y.g);
+            m_cbo.emplace_back(m_hue_y.b);
+            m_cbo.emplace_back(m_hue_y.a);
+
+            m_cbo.emplace_back(m_hue_y.r);
+            m_cbo.emplace_back(m_hue_y.g);
+            m_cbo.emplace_back(m_hue_y.b);
+            m_cbo.emplace_back(m_hue_y.a);
+
+            m_cbo.emplace_back(m_hue_y.r);
+            m_cbo.emplace_back(m_hue_y.g);
+            m_cbo.emplace_back(m_hue_y.b);
+            m_cbo.emplace_back(m_hue_y.a);
+
+            m_cbo.emplace_back(m_hue_y.r);
+            m_cbo.emplace_back(m_hue_y.g);
+            m_cbo.emplace_back(m_hue_y.b);
+            m_cbo.emplace_back(m_hue_y.a);
+        }
+
+        return &m_cbo[0];
+    }
+
+    //! \fn     color_data_size
+    //! \brief  Returns number of vertices (5) * dimension
+    int         color_data_size() const
+    {
+        return 5 * sizeof(glm::vec4);
     }
 
     //! \fn     vertex_buffer
@@ -91,17 +126,24 @@ public:
         return &m_vbo[0];
     }
 
+    //! \fn     vertex_data_size
+    //! \brief  Returns number of vertices (5) * dimension
+    int         vertex_data_size() const
+    {
+        return 5 * sizeof(glm::vec3);
+    }
+
 
 private:
     //! \fn     load_colors
     //! \brief  Loads the colors for the 5 vertices
     void        load_colors()
     {
-        m_hue_r = glm::vec3(0.808f, 0.000f, 0.345f);
-        m_hue_o = glm::vec3(1.000f, 0.369f, 0.000f);
-        m_hue_y = glm::vec3(1.000f, 0.851f, 0.000f);
-        m_hue_g = glm::vec3(0.606f, 0.916f, 0.843f);
-        m_hue_b = glm::vec3(0.455f, 0.820f, 0.918f);
+        m_hue_r = glm::vec4(0.808f, 0.000f, 0.345f, 0.500f);
+        m_hue_o = glm::vec4(1.000f, 0.369f, 0.000f, 0.500f);
+        m_hue_y = glm::vec4(1.000f, 0.851f, 0.000f, 0.500f);
+        m_hue_g = glm::vec4(0.606f, 0.916f, 0.843f, 0.500f);
+        m_hue_b = glm::vec4(0.455f, 0.820f, 0.918f, 0.500f);
     }
 
     glm::vec3   m_pt_a;
@@ -110,11 +152,11 @@ private:
     glm::vec3   m_pt_d;
     glm::vec3   m_pt_e;
 
-    glm::vec3   m_hue_r;
-    glm::vec3   m_hue_o;
-    glm::vec3   m_hue_y;
-    glm::vec3   m_hue_g;
-    glm::vec3   m_hue_b;
+    glm::vec4   m_hue_r;
+    glm::vec4   m_hue_o;
+    glm::vec4   m_hue_y;
+    glm::vec4   m_hue_g;
+    glm::vec4   m_hue_b;
 
     std::vector<float> m_vbo;
     std::vector<float> m_cbo;
