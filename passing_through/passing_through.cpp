@@ -13,7 +13,11 @@
 #include "Quintadecima.hpp"
 #include "QuintadecimaRaw.hpp"
 
-const std::string SHADER_HOME("/home/norme/Projects/shader-chef-linux/passing_through/");
+namespace
+{
+    int swap_tracker = 1;
+    const std::string SHADER_HOME("/home/norme/Projects/shader-chef-linux/passing_through/");
+}
 
 /*---------------------------------------------------------------------------*\
 | \\fn       key_callback
@@ -26,8 +30,23 @@ static void key_callback(
     int         action,
     int         mods)
 {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, GL_TRUE);
+    switch (key) {
+        case GLFW_KEY_ESCAPE:
+        {
+            if (action == GLFW_PRESS) {
+                glfwSetWindowShouldClose(window, GL_TRUE);
+            }
+        }
+
+        case GLFW_KEY_UP:
+        {
+            if (action == GLFW_PRESS) {
+                ++swap_tracker;
+            }
+        }
+
+        default:
+            break;
     }
 }
 
@@ -81,46 +100,87 @@ int main()
     GLuint program_handle = shaders.program_handle();
 
     /*-----------------------------------------------------------------------*\
-    |   Create and populate BOs
+    |   Create and populate BOs for generated pentagon
     \*-----------------------------------------------------------------------*/
-    Quintadecima penta(1.0);
-    //QuintadecimaRaw penta;
-    float* vertex_data = penta.vertex_buffer();
-    float* color_data  = penta.color_buffer_mono();
+    Quintadecima penta_gen(1.0);
+    float* vertex_data = penta_gen.vertex_buffer();
+    float* color_data = penta_gen.color_buffer_mono();
 
-    GLuint vbo_handles[2];
-    glGenBuffers(2, vbo_handles);
+    GLuint gen_vbo_handles[2];
+    glGenBuffers(2, gen_vbo_handles);
 
-    GLuint pbo_handle = vbo_handles[0];
-    glBindBuffer(GL_ARRAY_BUFFER, pbo_handle);
+    GLuint gen_pbo_handle = gen_vbo_handles[0];
+    glBindBuffer(GL_ARRAY_BUFFER, gen_pbo_handle);
     glBufferData(
         GL_ARRAY_BUFFER,
-        penta.vertex_data_size() * sizeof(float),
+        penta_gen.vertex_data_size() * sizeof(float),
         vertex_data,
         GL_STATIC_DRAW);
 
-    GLuint cbo_handle = vbo_handles[1];
-    glBindBuffer(GL_ARRAY_BUFFER, cbo_handle);
+    GLuint gen_cbo_handle = gen_vbo_handles[1];
+    glBindBuffer(GL_ARRAY_BUFFER, gen_cbo_handle);
     glBufferData(
         GL_ARRAY_BUFFER,
-        penta.color_data_size() * sizeof(float),
+        penta_gen.color_data_size() * sizeof(float),
         color_data,
         GL_STATIC_DRAW);
 
     /*-----------------------------------------------------------------------*\
-    |   Set up and bind VAO
+    |   Set up and bind VAO for generated pentagon
     \*-----------------------------------------------------------------------*/
-    GLuint vao_handle;
-    glGenVertexArrays(1, &vao_handle);
-    glBindVertexArray(vao_handle);
+    GLuint gen_vao_handle;
+    glGenVertexArrays(1, &gen_vao_handle);
+    glBindVertexArray(gen_vao_handle);
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
 
-    glBindBuffer(GL_ARRAY_BUFFER, pbo_handle);
+    glBindBuffer(GL_ARRAY_BUFFER, gen_pbo_handle);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-    glBindBuffer(GL_ARRAY_BUFFER, cbo_handle);
+    glBindBuffer(GL_ARRAY_BUFFER, gen_cbo_handle);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+    /*-----------------------------------------------------------------------*\
+    |   Create and populate BOs for constructed pentagon
+    \*-----------------------------------------------------------------------*/
+    QuintadecimaRaw penta_raw;
+    float* raw_vertex_data = penta_raw.vertex_buffer();
+    float* raw_color_data = penta_raw.color_buffer_mono();
+
+    GLuint raw_vbo_handles[2];
+    glGenBuffers(2, raw_vbo_handles);
+
+    GLuint raw_pbo_handle = raw_vbo_handles[0];
+    glBindBuffer(GL_ARRAY_BUFFER, raw_pbo_handle);
+    glBufferData(
+        GL_ARRAY_BUFFER,
+        penta_raw.vertex_data_size() * sizeof(float),
+        raw_vertex_data,
+        GL_STATIC_DRAW);
+
+    GLuint raw_cbo_handle = raw_vbo_handles[1];
+    glBindBuffer(GL_ARRAY_BUFFER, raw_cbo_handle);
+    glBufferData(
+        GL_ARRAY_BUFFER,
+        penta_raw.color_data_size() * sizeof(float),
+        raw_color_data,
+        GL_STATIC_DRAW);
+
+    /*-----------------------------------------------------------------------*\
+    |   Set up and bind VAO for constructed pentagon
+    \*-----------------------------------------------------------------------*/
+    GLuint raw_vao_handle;
+    glGenVertexArrays(1, &raw_vao_handle);
+    glBindVertexArray(raw_vao_handle);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    glBindBuffer(GL_ARRAY_BUFFER, raw_pbo_handle);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+    glBindBuffer(GL_ARRAY_BUFFER, raw_cbo_handle);
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     shaders.link_program();
@@ -139,9 +199,15 @@ int main()
     /*-----------------------------------------------------------------------*\
     |   Drawing loop
     \*-----------------------------------------------------------------------*/
-    while(!glfwWindowShouldClose(passing_through)) {
+    while (!glfwWindowShouldClose(passing_through)) {
         glUseProgram(program_handle);
-        glBindVertexArray(vao_handle);
+
+        if (swap_tracker % 2 == 0) {
+            glBindVertexArray(gen_vao_handle);
+        } else {
+            glBindVertexArray(raw_vao_handle);
+        }
+
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 5);
 
         glfwSwapBuffers(passing_through);
