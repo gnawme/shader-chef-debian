@@ -1,17 +1,34 @@
 #ifndef SHADER_CHEF_QUINTADECIMA_HPP
 #define SHADER_CHEF_QUINTADECIMA_HPP
 /*! -------------------------------------------------------------------------*\
-| \file     Quintadecima.hpp
-| \brief    Generates the 15th known tiling pentagon
-| \see      http://bit.ly/1NOHRfM
+| Generates the 15th known tiling pentagon from computed vertices
+| \see  http://bit.ly/1NOHRfM
 \*---------------------------------------------------------------------------*/
 #include <cmath>
+#include <iomanip>
+#include <iostream>
 #include <vector>
 
 namespace
 {
-    float torad(float deg) {
-        return deg * 3.14159265358979323846f / 180.0f;
+    double torad(double deg) {
+        return deg * 3.14159265358979323846f / 180.0;
+    }
+
+    void printFloatValue(double value)
+    {
+        std::cout << std::fixed << std::setprecision(7) << value;
+    }
+
+    void printVec3(std::string desc, const glm::vec3& vec)
+    {
+        std::cout << desc;
+        printFloatValue(vec.x);
+        std::cout << ", ";
+        printFloatValue(vec.y);
+        std::cout << ", ";
+        printFloatValue(vec.z);
+        std::cout << std::endl;
     }
 }
 
@@ -20,10 +37,10 @@ class Quintadecima
 public:
 
     Quintadecima(
-        float   a_length)
+        double   a_length)
         : m_alength(a_length)
-        , m_blength(0.5f * a_length)
-        , m_clength(a_length / (std::sqrt(2.0f) * (std::sqrt(3.0f) - 1.0f)))
+        , m_blength(0.5 * a_length)
+        , m_clength(a_length / (std::sqrt(2.0) * (std::sqrt(3.0) - 1.0)))
         , m_dlength(m_blength)
         , m_elength(m_blength)
     {
@@ -38,9 +55,9 @@ public:
 
     //! \fn     vertex_buffer
     //! \brief  Returns pentagon decomposed into triangle strip DCEBA
-    float*      vertex_buffer()
+    double*      vertex_buffer()
     {
-        // Allocate for 5 vec3<float>
+        // Allocate for 5 dvec3<double>
         if (m_vbo.empty()) {
             m_vbo.emplace_back(m_pt_d.x);
             m_vbo.emplace_back(m_pt_d.y);
@@ -144,22 +161,22 @@ public:
     //! \brief  Returns number of vertices (5) * dimension
     int         vertex_data_size() const
     {
-        return 5 * sizeof(glm::vec3);
+        return 5 * sizeof(glm::dvec3);
     }
 
 private:
     //! \fn     gen_pt_a
     //! \brief  Vertex A (segment EA)
-    glm::vec3   gen_pt_a()
+    glm::dvec3   gen_pt_a()
     {
-        return glm::vec3(m_alength, 0.0, 0.0);
+        return glm::dvec3(m_alength, 0.0, 0.0);
     }
 
     //! \fn     gen_pt_b
     //! \brief  Vertex B (segment AB)
-    glm::vec3   gen_pt_b()
+    glm::dvec3   gen_pt_b()
     {
-        return glm::vec3(
+        return glm::dvec3(
                    m_blength * std::cos(torad(120.0)),
                    m_blength * std::sin(torad(120.0)),
                    0.0
@@ -168,9 +185,9 @@ private:
 
     //! \fn     gen_pt_c
     //! \brief  Vertex C (segment BC)
-    glm::vec3   gen_pt_c()
+    glm::dvec3   gen_pt_c()
     {
-        return glm::vec3(
+        return glm::dvec3(
                    m_clength * std::cos(torad(165.0)),
                    m_clength * std::sin(torad(165.0)),
                    0.0) + m_pt_b;
@@ -178,9 +195,9 @@ private:
 
     //! \fn     gen_pt_d
     //! \brief  Vertex D (segment CD)
-    glm::vec3   gen_pt_d()
+    glm::dvec3   gen_pt_d()
     {
-        return glm::vec3(
+        return glm::dvec3(
                    m_dlength * std::cos(torad(-120.0)),
                    m_dlength * std::sin(torad(-120.0)),
                    0.0) + m_pt_c;
@@ -188,9 +205,9 @@ private:
 
     //! \fn     gen_pt_e
     //! \brief  Vertex E (segment DE)
-    glm::vec3   gen_pt_e()
+    glm::dvec3   gen_pt_e()
     {
-        return glm::vec3(
+        return glm::dvec3(
                    m_elength * std::cos(torad(330.0)),
                    m_elength * std::sin(torad(330.0)),
                    0.0) + m_pt_d;
@@ -207,17 +224,17 @@ private:
         m_hue_b = glm::vec4(0.455f, 0.820f, 0.918f, 0.500f);
     }
 
-    float       m_alength;
-    float       m_blength;
-    float       m_clength;
-    float       m_dlength;
-    float       m_elength;
+    double      m_alength;
+    double      m_blength;
+    double      m_clength;
+    double      m_dlength;
+    double      m_elength;
 
-    glm::vec3   m_pt_a;
-    glm::vec3   m_pt_b;
-    glm::vec3   m_pt_c;
-    glm::vec3   m_pt_d;
-    glm::vec3   m_pt_e;
+    glm::dvec3  m_pt_a;
+    glm::dvec3  m_pt_b;
+    glm::dvec3  m_pt_c;
+    glm::dvec3  m_pt_d;
+    glm::dvec3  m_pt_e;
 
     glm::vec4   m_hue_r;
     glm::vec4   m_hue_o;
@@ -225,8 +242,8 @@ private:
     glm::vec4   m_hue_g;
     glm::vec4   m_hue_b;
 
-    std::vector<float> m_vbo;
-    std::vector<float> m_cbo;
+    std::vector<double> m_vbo;
+    std::vector<float>  m_cbo;
 
 };
 

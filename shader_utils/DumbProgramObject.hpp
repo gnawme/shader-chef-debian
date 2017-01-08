@@ -1,8 +1,7 @@
 #ifndef SHADER_CHEF_DUMB_PROGRAM_OBJECT_HPP
 #define SHADER_CHEF_DUMB_PROGRAM_OBJECT_HPP
-/*---------------------------------------------------------------------------*\
-| \file     DumbProgramObject.hpp
-| \brief    Naive class to manage a GLSL shader program
+/*! Naive class to manage a GLSL shader -------------------------------------*\
+|
 \*---------------------------------------------------------------------------*/
 #include <GL/gl.h>
 

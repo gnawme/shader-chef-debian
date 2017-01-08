@@ -1,12 +1,12 @@
-/*! -------------------------------------------------------------------------*\
-| \file     QuintadecimaRaw.hpp
-| \brief    Generates the 15th known tiling pentagon from given points
-| \see      http://bit.ly/1NOHRfM
-\*---------------------------------------------------------------------------*/
 #ifndef PASSING_THROUGH_QUINTADECIMARAW_H
 #define PASSING_THROUGH_QUINTADECIMARAW_H
+/*! -------------------------------------------------------------------------*\
+| Generates the 15th known tiling pentagon from points derived by construction
+| \see  http://bit.ly/1NOHRfM
+\*---------------------------------------------------------------------------*/
 
 #include <glm/glm.hpp>
+#include <limits>
 #include <vector>
 
 //! \class QuintadecimaRaw
@@ -14,13 +14,14 @@ class QuintadecimaRaw
 {
 public:
     QuintadecimaRaw()
-    : m_pt_a( 1.0000000, 0.0000000, 0.0)
-    , m_pt_b( 0.7500000, 0.4296875, 0.0)
-    , m_pt_c(-0.1718750, 0.6796875, 0.0)
-    , m_pt_d(-0.4296875, 0.2500000, 0.0)
-    , m_pt_e( 0.0000000, 0.0000000, 0.0)
+    : m_pt_a( 1.00000000, 0.00000000, 0.0)
+    , m_pt_b( 0.75000000, 0.42578125, 0.0)
+    , m_pt_c(-0.18359375, 0.68359375, 0.0)
+    , m_pt_d(-0.43359375, 0.25000000, 0.0)
+    , m_pt_e( 0.00000000, 0.00000000, 0.0)
     {
         load_colors();
+        derive_extrema();
     }
 
     //! \fn     color_buffer
@@ -96,6 +97,14 @@ public:
         return 5 * sizeof(glm::vec4);
     }
 
+    //! \fn     get_extrema
+    //! \brief  Returns the extrema of the vertex data
+    void   get_extrema(glm::vec3& minima, glm::vec3& maxima)
+    {
+        minima = m_minima;
+        maxima = m_maxima;
+    }
+
     //! \fn     vertex_buffer
     //! \brief  Returns pentagon decomposed into triangle strip DCEBA
     float*      vertex_buffer()
@@ -135,6 +144,36 @@ public:
 
 
 private:
+    //! \fn     derive_extrema
+    //! \brief  Derives extrema of vertices
+    void        derive_extrema()
+    {
+        m_maxima.x = std::max(m_pt_a.x, std::numeric_limits<float>::min());
+        m_maxima.y = std::max(m_pt_a.y, std::numeric_limits<float>::min());
+        m_minima.x = std::min(m_pt_a.x, std::numeric_limits<float>::max());
+        m_minima.y = std::min(m_pt_a.y, std::numeric_limits<float>::max());
+
+        m_maxima.x = std::max(m_pt_b.x, m_maxima.x);
+        m_maxima.y = std::max(m_pt_b.y, m_maxima.y);
+        m_minima.x = std::min(m_pt_b.x, m_minima.x);
+        m_minima.y = std::min(m_pt_b.y, m_minima.y);
+
+        m_maxima.x = std::max(m_pt_c.x, m_maxima.x);
+        m_maxima.y = std::max(m_pt_c.y, m_maxima.y);
+        m_minima.x = std::min(m_pt_c.x, m_minima.x);
+        m_minima.y = std::min(m_pt_c.y, m_minima.y);
+
+        m_maxima.x = std::max(m_pt_d.x, m_maxima.x);
+        m_maxima.y = std::max(m_pt_d.y, m_maxima.y);
+        m_minima.x = std::min(m_pt_d.x, m_minima.x);
+        m_minima.y = std::min(m_pt_d.y, m_minima.y);
+
+        m_maxima.x = std::max(m_pt_e.x, m_maxima.x);
+        m_maxima.y = std::max(m_pt_e.y, m_maxima.y);
+        m_minima.x = std::min(m_pt_e.x, m_minima.x);
+        m_minima.y = std::min(m_pt_e.y, m_minima.y);
+    }
+
     //! \fn     load_colors
     //! \brief  Loads the colors for the 5 vertices
     void        load_colors()
@@ -151,6 +190,9 @@ private:
     glm::vec3   m_pt_c;
     glm::vec3   m_pt_d;
     glm::vec3   m_pt_e;
+
+    glm::vec3   m_minima;
+    glm::vec3   m_maxima;
 
     glm::vec4   m_hue_r;
     glm::vec4   m_hue_o;

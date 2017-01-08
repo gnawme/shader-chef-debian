@@ -12,7 +12,8 @@ set(CMAKE_INCLUDE_PATH
 
 set(SOURCE_FILES
         passing_through.cpp
-        QuintadecimaRaw.hpp)
+        QuintadecimaRaw.hpp
+        Quintadecima.hpp)
 
 set(CMAKE_LIBRARY_PATH /usr/lib/x86_64-linux-gnu)
 

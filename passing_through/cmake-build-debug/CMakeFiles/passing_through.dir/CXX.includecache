@@ -9,11 +9,17 @@
 /home/norme/Projects/shader-chef-linux/passing_through/Quintadecima.hpp
 cmath
 -
+iomanip
+-
+iostream
+-
 vector
 -
 
 /home/norme/Projects/shader-chef-linux/passing_through/QuintadecimaRaw.hpp
 glm/glm.hpp
+-
+limits
 -
 vector
 -
@@ -24,6 +30,8 @@ GL/glew.h
 GLFW/glfw3.h
 -
 glm/glm.hpp
+-
+glm/gtc/matrix_transform.hpp
 -
 memory
 -

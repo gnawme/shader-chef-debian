@@ -1,8 +1,7 @@
 #ifndef SHADER_CHEF_DUMB_SHADER_OBJECT_HPP
 #define SHADER_CHEF_DUMB_SHADER_OBJECT_HPP
-/*---------------------------------------------------------------------------*\
-| \file     DumbShaderObject.hpp
-| \brief    Naive class to manage a GLSL shader
+/*! Naive class to manage a GLSL shader -------------------------------------*\
+|
 \*---------------------------------------------------------------------------*/
 #include <GL/gl.h>
 
@@ -59,10 +58,10 @@ private:
         GLint result;
         glGetShaderiv(m_shader_handle, GL_COMPILE_STATUS, &result);
 
-        if(result == GL_FALSE) {
+        if (result == GL_FALSE) {
             GLint loglen;
             glGetShaderiv(m_shader_handle, GL_INFO_LOG_LENGTH, &loglen);
-            if(loglen > 0) {
+            if (loglen > 0) {
                 std::unique_ptr<char> log(new char[loglen]);
 
                 GLsizei written;
