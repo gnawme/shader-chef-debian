@@ -28,30 +28,30 @@ public:
     float*      color_buffer()
     {
         if (m_cbo.empty()) {
-            m_cbo.emplace_back(m_hue_r.r);
-            m_cbo.emplace_back(m_hue_r.g);
-            m_cbo.emplace_back(m_hue_r.b);
-            m_cbo.emplace_back(m_hue_r.a);
-
-            m_cbo.emplace_back(m_hue_o.r);
-            m_cbo.emplace_back(m_hue_o.g);
-            m_cbo.emplace_back(m_hue_o.b);
-            m_cbo.emplace_back(m_hue_o.a);
-
-            m_cbo.emplace_back(m_hue_y.r);
-            m_cbo.emplace_back(m_hue_y.g);
-            m_cbo.emplace_back(m_hue_y.b);
-            m_cbo.emplace_back(m_hue_y.a);
+            m_cbo.emplace_back(m_hue_b.r);
+            m_cbo.emplace_back(m_hue_b.g);
+            m_cbo.emplace_back(m_hue_b.b);
+            m_cbo.emplace_back(m_hue_b.a);
 
             m_cbo.emplace_back(m_hue_g.r);
             m_cbo.emplace_back(m_hue_g.g);
             m_cbo.emplace_back(m_hue_g.b);
             m_cbo.emplace_back(m_hue_g.a);
 
-            m_cbo.emplace_back(m_hue_b.r);
-            m_cbo.emplace_back(m_hue_b.g);
-            m_cbo.emplace_back(m_hue_b.b);
-            m_cbo.emplace_back(m_hue_b.a);
+            m_cbo.emplace_back(m_hue_y.r);
+            m_cbo.emplace_back(m_hue_y.g);
+            m_cbo.emplace_back(m_hue_y.b);
+            m_cbo.emplace_back(m_hue_y.a);
+
+            m_cbo.emplace_back(m_hue_o.r);
+            m_cbo.emplace_back(m_hue_o.g);
+            m_cbo.emplace_back(m_hue_o.b);
+            m_cbo.emplace_back(m_hue_o.a);
+
+            m_cbo.emplace_back(m_hue_r.r);
+            m_cbo.emplace_back(m_hue_r.g);
+            m_cbo.emplace_back(m_hue_r.b);
+            m_cbo.emplace_back(m_hue_r.a);
         }
 
         return &m_cbo[0];

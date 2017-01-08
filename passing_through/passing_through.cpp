@@ -104,7 +104,7 @@ int main()
     \*-----------------------------------------------------------------------*/
     Quintadecima penta_gen(1.0);
     double* vertex_data = penta_gen.vertex_buffer();
-    float* color_data = penta_gen.color_buffer_mono();
+    float* color_data = penta_gen.color_buffer();
 
     GLuint gen_vbo_handles[2];
     glGenBuffers(2, gen_vbo_handles);
@@ -146,7 +146,7 @@ int main()
     \*-----------------------------------------------------------------------*/
     QuintadecimaRaw penta_raw;
     float* raw_vertex_data = penta_raw.vertex_buffer();
-    float* raw_color_data = penta_raw.color_buffer_mono();
+    float* raw_color_data = penta_raw.color_buffer();
 
     GLuint raw_vbo_handles[2];
     glGenBuffers(2, raw_vbo_handles);
@@ -214,29 +214,10 @@ int main()
     glMatrixMode(GL_MODELVIEW);
 
     /*-----------------------------------------------------------------------*\
-    |   Print out active attributes
+    |   Print out active attributes and uniforms
     \*-----------------------------------------------------------------------*/
-    GLint maxLength, nAttribs;
-    glGetProgramiv(shaders.program_handle(), GL_ACTIVE_ATTRIBUTES,
-               &nAttribs);
-
-    glGetProgramiv(shaders.program_handle(), GL_ACTIVE_ATTRIBUTE_MAX_LENGTH,
-               &maxLength);
-
-    std::unique_ptr<GLchar> attr_names(new GLchar[maxLength]);
-
-    std::cout << " Index | Name" << std::endl;
-
-    for (auto i = 0; i < nAttribs; ++i) {
-        GLint written, size;
-        GLenum type;
-        glGetActiveAttrib( shaders.program_handle(), i, maxLength, &written, &size, &type, attr_names.get() );
-        GLint loc_idx = glGetAttribLocation(shaders.program_handle(), attr_names.get());
-        std::cout
-        << std::setw(6) << loc_idx
-        << " | "
-        << attr_names.get() << std::endl;
-    }
+    print_active_attributes(shaders.program_handle());
+    print_active_uniforms(shaders.program_handle());
 
     /*-----------------------------------------------------------------------*\
     |   Drawing loop
