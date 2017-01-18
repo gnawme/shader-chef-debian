@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/textiled.dir/textiled.cpp.o  -o textiled -lSOIL -lGL -lGLEW -lglfw 

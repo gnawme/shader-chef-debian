@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/passing_through.dir/main.cpp.o  -o passing_through -lGL -lGLEW -lglfw 
