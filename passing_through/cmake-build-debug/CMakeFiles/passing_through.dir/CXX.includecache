@@ -33,6 +33,8 @@ glm/glm.hpp
 -
 glm/gtc/matrix_transform.hpp
 -
+glm/gtc/type_ptr.hpp
+-
 memory
 -
 DumbProgramObject.hpp
@@ -47,6 +49,10 @@ QuintadecimaRaw.hpp
 /home/norme/Projects/shader-chef-linux/shader_utils/DumbProgramObject.hpp
 GL/gl.h
 -
+iostream
+-
+memory
+-
 
 /home/norme/Projects/shader-chef-linux/shader_utils/DumbShaderObject.hpp
 GL/gl.h
@@ -59,7 +65,11 @@ shader_utils.hpp
 /home/norme/Projects/shader-chef-linux/shader_utils/shader_utils.hpp
 
 /home/norme/Projects/shader-chef-linux/shader_utils/shader_utils.hpp
+GL/gl.h
+-
 fstream
+-
+iomanip
 -
 sstream
 -

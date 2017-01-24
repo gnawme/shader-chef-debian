@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <memory>
 
@@ -197,7 +198,7 @@ int main()
     glm::mat4 id_matrix = glm::mat4(1.0);
     glm::mat4 trans_matrix = glm::translate(id_matrix, glm::vec3(x_center, y_center, 0.0));
 
-    GLuint uniform_loc = glGetUniformLocation(shaders.program_handle(), "RotationMatrix");
+    GLint mvp_loc = glGetUniformLocation(shaders.program_handle(), "MVP");
 
     /*-----------------------------------------------------------------------*\
     |   Set up viewing
@@ -207,11 +208,10 @@ int main()
     glViewport(0, 0, width, height);
 
     float ratio = static_cast<float>(width) / static_cast<float>(height);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-ratio, ratio, -1.0, 1.0, 1.0, -1.0);
-    glMatrixMode(GL_MODELVIEW);
+
+    glm::mat4 proj = glm::ortho(-ratio, ratio, -1.0f, 1.0f, 0.1f, 100.0f);
+    glm::mat4 view = glm::lookAt(glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+    glm::mat4 mvp = proj * view * trans_matrix;
 
     /*-----------------------------------------------------------------------*\
     |   Print out active attributes and uniforms
@@ -224,8 +224,8 @@ int main()
     \*-----------------------------------------------------------------------*/
     while (!glfwWindowShouldClose(passing_through)) {
         glUseProgram(program_handle);
-        if (uniform_loc >= 0) {
-            glUniformMatrix4fv(uniform_loc, 1, GL_TRUE, &trans_matrix[0][0]);
+        if (mvp_loc >= 0) {
+            glUniformMatrix4fv(mvp_loc, 1, GL_TRUE, glm::value_ptr(mvp));
         }
 
         if (swap_tracker % 2 == 0) {
@@ -234,7 +234,8 @@ int main()
             glBindVertexArray(raw_vao_handle);
         }
 
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(0.325f, 0.408f, 0.471f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_BLEND);
         glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

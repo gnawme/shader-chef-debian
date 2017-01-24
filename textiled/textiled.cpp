@@ -124,7 +124,7 @@ int main(int argc, char** argv)
     glfwInit();
 
     GLFWwindow* blobby_tile =
-        glfwCreateWindow(1280, 720, "Blob Eats Pentatile", NULL, NULL);
+        glfwCreateWindow(1280, 720, "Textured Pentatile?", NULL, NULL);
 
     if (!blobby_tile) {
         throw std::runtime_error("glfwCreateWindow failed");
@@ -144,15 +144,13 @@ int main(int argc, char** argv)
     |   Create and populate BOs for constructed pentagon
     \*-----------------------------------------------------------------------*/
     QuintadecimaTex pentatex;
-    float* pent_vertex_data = pentatex.vertex_buffer();
-    float* pent_color_data = pentatex.color_buffer_mono();
-    float* pent_texcoord_data = pentatex.texture_buffer();
 
     GLuint pent_vbo_handles[3];
     glGenBuffers(3, pent_vbo_handles);
 
     GLuint pent_pbo_handle = pent_vbo_handles[0];
     glBindBuffer(GL_ARRAY_BUFFER, pent_pbo_handle);
+    float* pent_vertex_data = pentatex.vertex_buffer();
     glBufferData(
         GL_ARRAY_BUFFER,
         pentatex.vertex_data_size() * sizeof(float),
@@ -161,6 +159,7 @@ int main(int argc, char** argv)
 
     GLuint pent_cbo_handle = pent_vbo_handles[1];
     glBindBuffer(GL_ARRAY_BUFFER, pent_cbo_handle);
+    float* pent_color_data = pentatex.color_buffer_mono();
     glBufferData(
         GL_ARRAY_BUFFER,
         pentatex.color_data_size() * sizeof(float),
@@ -168,6 +167,7 @@ int main(int argc, char** argv)
         GL_STATIC_DRAW);
 
     GLuint pent_tco_handle = pent_vbo_handles[2];
+    float* pent_texcoord_data = pentatex.texture_buffer();
     glBindBuffer(GL_ARRAY_BUFFER, pent_tco_handle);
     glBufferData(
         GL_ARRAY_BUFFER,
@@ -200,6 +200,7 @@ int main(int argc, char** argv)
     \*-----------------------------------------------------------------------*/
     GLuint texture;
     glGenTextures(1, &texture);
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
 
     /*-----------------------------------------------------------------------*\
@@ -207,7 +208,7 @@ int main(int argc, char** argv)
     \*-----------------------------------------------------------------------*/
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     /*-----------------------------------------------------------------------*\
@@ -269,6 +270,7 @@ int main(int argc, char** argv)
 
         glUseProgram(program_handle);
 
+        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
         glBindVertexArray(pent_vao_handle);
 
